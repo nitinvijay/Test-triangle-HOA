@@ -5,10 +5,10 @@
 export const environment = {
   production: false,
   config: {
-    tenant: 'TestTriangleHOA.onmicrosoft.com',
-    clientId: '43d97ccd-47ce-455b-a433-0783ceca228d',
+    tenant: 'your tenant id',
+    clientId: 'your client id',
     endpoints: {
-      'https://localhost:4200/': '3fdddce0-521f-4185-899a-9f119728b08b'
+      'https://localhost:4200/': 'your secret'
     }
   }
 };
