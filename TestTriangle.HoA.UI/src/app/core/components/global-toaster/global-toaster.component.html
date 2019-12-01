@@ -1,0 +1,5 @@
+<div class="alert alert-dismissible st-toaster-position" *ngIf='showToastMessage' [attr.context]='toastContext'
+  role="alert">
+  <span [innerHtml]='toasterMessage'></span>
+    <i class="material-icons dp48 alert-close" (click)='showToastMessage = !showToastMessage; logCloseEvent();'>close</i>
+</div>

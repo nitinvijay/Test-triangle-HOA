@@ -1,0 +1,31 @@
+<div class="modal modal-z-index" [ngClass]="{'modal-opened': this.displayConfirmationMsg === true,
+  'modal-div modal-medium':isWideCss,'modal-small':!isWideCss, 'modal-large': isLargeCss}" id="overlay"
+  tabindex="-1" role="dialog">
+  <section class="modal-content" [ngClass]="{'cancel-trans-pop-up-max-width':isWideCss && !isLargeCss}">
+    <header class="side-overlay-header model-header">
+      <h4 class="modal-title col-md-10">{{ title }}</h4>
+      <!-- <button class="button-icon modal-close" aria-label="close dialog" (click)="onClose()"><span
+          class="icon-close"></span></button> -->
+      <i class="material-icons dp48 float-right c-white i-close" tooltip="Close" tooltipPlacement="bottom"
+        (click)="onClose()">close</i>
+    </header>
+    <div class="modal-body">
+      <span *ngIf="!template">
+        <span *ngIf="dynamicComponent==null || dynamicComponent==undefined">
+          <span class="st-platform-confirmation-msg">{{ confirmationMsg  }}</span>
+        </span>
+        <span *ngIf="dynamicComponent!=null || dynamicComponent!=undefined">
+          <div id="dynamicContainer" #dynamicContainer></div>
+        </span>
+      </span>
+      <span *ngIf="template">
+        <ng-container *ngTemplateOutlet="template">
+        </ng-container>
+      </span>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-info pull-right" (click)="onConfirm()">{{ this.ok }}</button>
+        <button type="button" class="btn btn-default pull-right" (click)="onClose()">{{ this.cancel }}</button>
+      </div>
+  </section>
+</div>

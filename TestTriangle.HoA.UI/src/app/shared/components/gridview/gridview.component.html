@@ -1,0 +1,76 @@
+<div class="col-md-12 nopadding history-div-min-height" overlay [isOpen]="isDataLoading">
+  <div class="" *ngIf="this.gridData && this.gridData.Body.length > 0; else noRecord">
+    <div #historyTable class="history-table-overflow">
+      <table class="table table-bordered table-striped">
+        <thead class="table-head">
+          <tr>
+            <th *ngIf="this.gridData?.hasChildGrid">&nbsp;</th>
+            <th *ngIf="this.gridData?.hasEdit">&nbsp;</th>
+            <th *ngIf="this.gridData?.hasDelete">&nbsp;</th>
+            <th *ngFor="let col of this.gridData.Headers" class="font-weight500">
+              <!-- <i class="material-icons dp48" (click)="onFilter(col)" *ngIf="col.hasFilter">filter_list</i> -->
+              {{ col.header }}
+              <i class="material-icons dp48 float-right" (click)="onSort(col)" *ngIf="col.hasSort">{{ col.sortDir === 'asc' ? 'expand_less' : 'expand_more' }}</i>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-template #tr let-rowData="rowData" let-isOpen="isOpen" let-hLength="hLength"
+          let-isLoaded="isLoaded" let-data="data"
+            let-rowIndex="rowIndex">
+            <tr>
+              <td *ngIf="this.gridData?.hasChildGrid">
+                  <i class="material-icons"
+                  (click)="isOpen = !isOpen;rowExpander_dynamic_Clicked(data,rowIndex,isLoaded);isLoaded=true;">
+                   {{ isOpen ? 'expand_less' : 'expand_more' }}
+                  </i>
+              </td>
+              <td *ngIf="this.gridData?.hasEdit">
+                  <i class="material-icons dp48" (click)="onEdit(data)">edit</i>
+              </td>
+              <td *ngIf="this.gridData?.hasDelete">
+                  <i class="material-icons dp48" (click)="onDelete(data)">delete</i>
+              </td>
+              <td class="font-size12" *ngFor="let col of rowData">{{col}}</td>
+            </tr>
+            <tr *ngIf="this.gridData?.hasChildGrid" [hidden]="isOpen === true ? null : true">
+              <td>&nbsp;</td>
+              <td [attr.colspan]="hLength + 2">
+                <ng-template #childCompContainer></ng-template>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-container *ngFor="let row of this.gridData.Body; let rowIndex = index">
+            <ng-container *ngTemplateOutlet="tr;
+            context: { rowData: row, isOpen: false, data: this.gridData.Data[rowIndex],
+               hLength: this.gridData.Headers.length, rowIndex: rowIndex, isLoaded: false}">
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div class="float-right dataTables_paginate paging_simple_numbers"*ngIf="totalPages > 1">
+        <ul class="pagination">
+          <li [ngClass]="{'disabled': this.currentPage === 1}" class="paginate_button page-item first">
+            <a class="page-link" (click)="setPage(1)"> {{ 'First' }}</a>
+          </li>
+          <li [ngClass]="{'active': item.Active}" class="page-item paginate_button" *ngFor="let item of pagingData">
+            <a class="page-link" (click)="setPage(item.Page)"> {{ item.Label }}</a>
+          </li>
+          <li [ngClass]="{'disabled': this.currentPage === totalPages}" class="paginate_button page-item last">
+            <a class="page-link" (click)="setPage(this.totalPages)"> {{ 'Last' }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <ng-template #noRecord>
+    <div class="col-md-12 text-center">
+      <!-- No record found. -->
+      <div *ngIf="isDataLoading; else noData">
+      </div>
+      <ng-template #noData>
+        No records found
+      </ng-template>
+    </div>
+  </ng-template>

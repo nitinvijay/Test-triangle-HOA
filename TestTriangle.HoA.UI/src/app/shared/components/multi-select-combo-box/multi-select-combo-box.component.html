@@ -1,0 +1,88 @@
+<div #dd tabindex="0" (blur)="onTouched()" class="multiselect-dropdown" (focus)="onDropdownFocus()" stOutsideClick
+  (onOutsideClick)="closeDropdown()" [enableClickDetect]="isDropdownOpen">
+  <div [class.disabled]="isdisabled">
+    <div class="st-multiselect-wrap k-floatwrap" *ngIf="!singleSelection">
+      <span tabindex="-1" #multiSelectBox class="dropdown-btn st-multiselect-wrap k-floatwrap"
+        (click)="toggleDropdown($event)">
+        <span class="multiselect-placeholder" *ngIf="selectedItems.length == 0">{{_placeholder}}</span>
+        <ul class="st-reset">
+          <li class="st-button font-inherit {{textAlignClassForMultiSelect}}" *ngFor="let item of selectedItems;trackBy: trackByFn;let k = index"
+            [attr.data-hidden]="k > itemsShowLimit-1">
+            <span>{{item[this.textField]}}</span>
+            <span class="st-select">
+              <a class="st-icon wk-icon-filled-close" (click)="onItemClick($event,item)"></a>
+            </span>
+          </li>
+        </ul>
+      </span>
+    </div>
+    <span tabindex="-1" class="dropdown-btn" (click)="toggleDropdown($event)" *ngIf="singleSelection">
+      <span class="wk-field-item">
+        <span _ngcontent-c31="" class="astrix-style"
+          *ngIf="this.ActionField && this.ActionField.length > 0 &&  this.selectedItems && this.selectedItems.length > 0
+              && this.selectedItems[0].hasOwnProperty(this.ActionField) && this.selectedItems[0][this.ActionField]
+                && this.selectedItems[0][this.ActionField].length > 0 && this.selectedItems[0][this.ActionField].indexOf(this.userAction.Required) !== -1"
+          [ngClass]="this.ActionField && this.ActionField.length > 0 &&  this.selectedItems && this.selectedItems.length > 0
+                && this.selectedItems[0].hasOwnProperty(this.ActionField) && this.selectedItems[0][this.ActionField]
+                  && this.selectedItems[0][this.ActionField].length > 0 && this.selectedItems[0][this.ActionField].indexOf(this.userAction.Required) !== -1 ? 'req-field-multiselect' :''">*</span>
+        <input autocomplete="new-password" type="text" [readOnly]="isdisabled"
+          [value]="(selectedItems && selectedItems.length > 0) ? selectedItems[0][this.textField] : ''"
+          class="search-box" placeholder="{{_placeholder}}"
+          (blur)="($event.relatedTarget || document.activeElement) === null ? onFilterTextBlur($event) : (!($event.relatedTarget || document.activeElement).classList.contains('multiselect-item-checkbox') ? onFilterTextBlur($event) : null)"
+          (focus)="onFilterTextFocus($event)" (keydown)="onKeyDown($event)" (input)="onFilterTextChange($event)"
+          [ngClass]="this.ActionField && this.ActionField.length > 0 &&  this.selectedItems && this.selectedItems.length > 0
+                && this.selectedItems[0].hasOwnProperty(this.ActionField) && this.selectedItems[0][this.ActionField]
+                  && this.selectedItems[0][this.ActionField].length > 0 && this.selectedItems[0][this.ActionField].indexOf(this.userAction.Required) !== -1 ? 'req-field-input-multiselect' :''"
+          #searchBox>
+        <!-- <span class="clearFilter" tabindex="-2"
+          [attr.data-hidden]="this.clearFilterEnabled || searchBox.value.length === 0"
+          (click)="searchBox.value = ''; clearFilter()"></span> -->
+      </span>
+      <span class="float-right padding-right4">
+        <span class="padding-right6" *ngIf="itemShowRemaining()>0">+{{itemShowRemaining()}}</span>
+        <span tabindex="-2" *ngIf="!this.Loading" [ngClass]="isDropdownOpen ? 'dropdown-up' : 'dropdown-down'"></span>
+        <span tabindex="-2" *ngIf="this.Loading && this.showLoader" class="float-right spinner-icon-for-dd"></span>
+      </span>
+    </span>
+  </div>
+  <div tabindex="0" class="wk-dropdown-list" [attr.data-hidden]="!isDropdownOpen">
+    <ul class="item1" *ngIf="_data.length > 0 && !singleSelection && enableCheckAll && limitSelection===-1">
+      <li (click)="toggleSelectAll()" tabindex="-1"
+        class="multiselect-item-checkbox padding10 border-bottom-light-gray">
+        <input autocomplete="new-password" type="checkbox" [checked]="isAllItemsSelected()"
+          [disabled]="isdisabled || isLimitSelectionReached()" />
+        <div>{{!isAllItemsSelected() ? selectAllText : unSelectAllText}}</div>
+      </li>
+    </ul>
+    <ul class="item2" *ngIf="!this.Loading" [style.maxHeight]="maxHeight+'px'">
+      <ng-container *ngFor="let groupedItem of _data | groupBy : this.groupField : this.hasOptionGroup">
+          <li tabindex="-1" *ngIf="groupedItem.key && groupedItem.key.length > 0" class="multiselect-item-checkbox option-group">
+              <span>{{ groupedItem.key }}</span>
+          </li>
+          <li *ngFor="let item of groupedItem.value" tabindex="-1" class="multiselect-item-checkbox">
+            <div>
+              <input autocomplete="new-password" *ngIf="!this.singleSelection" type="checkbox" [checked]="isSelected(item)"
+                [disabled]="isdisabled || (isLimitSelectionReached() && !isSelected(item))" />
+              <div (click)="onItemClick($event,item)">
+                <span *ngIf="this.ActionField && this.ActionField.length > 0 && item && item.hasOwnProperty(this.ActionField) && item[this.ActionField]
+                  && item[this.ActionField].length > 0 && item[this.ActionField].indexOf(this.userAction.Required) !== -1"
+                  _ngcontent-c31="" class="astrix-style">* </span>
+                <span>{{ item[this.textField] }}</span>
+              </div>
+              <span *ngIf="this.ActionField && this.ActionField.length > 0 && item && item.hasOwnProperty(this.ActionField) && item[this.ActionField]
+                && item[this.ActionField].length > 0 && item[this.ActionField].indexOf(this.userAction.Delete) !== -1"
+                class="float-right font-color-red wk-icon-trash font-size16 combobox-delete-icon-position"
+                (click)="onItemActionClick(item,this.userAction.Delete)"></span>
+            </div>
+          </li>
+      </ng-container>
+      <li *ngIf="!_data || _data.length == 0">
+        <span>No data available</span>
+      </li>
+      <li *ngIf="isAddAfterList" class="border-top-gray" (mousedown)="AddTemplateClick()">
+        <span class="wk-icon-plus margin-left0 font-size16 font-color-blue"></span>
+        <span>{{this.AddAfterText}}</span>
+      </li>
+    </ul>
+  </div>
+</div>

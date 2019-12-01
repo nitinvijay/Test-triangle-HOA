@@ -1,0 +1,94 @@
+<div class="overlay" *ngIf="!this.isCustomerAdd else onlyForm">
+    <div class="overlay-content">
+      <div overlay [isOpen]="formSaveOperationInProgress">
+        <div id="customerAddDiv" class="bg-white">
+          <div class="side-overlay-header">
+            <span>
+              {{ this.ticketTitle}}
+            </span>
+            <i class="material-icons dp48 float-right c-white" tooltip="Close" tooltipPlacement="bottom"
+              (click)="formCloseClicked()">close</i>
+            <i class="material-icons dp48 float-right c-white" *ngIf="!formSaveOperationInProgress" tooltip="Save"
+              tooltipPlacement="bottom" (click)="saveTicket()">check</i>
+            <i *ngIf="isEditModeOn" class="material-icons dp48 float-right c-white"
+              (click)='deleteTicket()' tooltip="Delete" tooltipPlacement="bottom">delete</i>
+          </div>
+          <div class="alert-danger" *ngIf="saveFormErrors.length> 0">
+            <div *ngFor="let err of saveFormErrors">{{err}}</div>
+          </div>
+          <ng-container *ngTemplateOutlet="formDiv; context: $implicit">
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #onlyForm>
+      <ng-container *ngTemplateOutlet="formDiv; context: $implicit">
+        </ng-container>
+  </ng-template>
+<ng-template #formDiv>
+<form disableAutoComplete [formGroup]="registerForm" #ticketForm="ngForm" (ngSubmit)="saveTicket()"
+  class="form-horizontal">
+  <div class="box-body">
+    <div class="form-group">
+      <label class="col-sm-12 control-label">Subject</label>
+      <div class="col-sm-12" [ngClass]="validateControl('subject') ?
+                          'field-has-error': ''">
+        <input autocomplete="new-password" class="form-control" type="text" formControlName="subject"
+          placeholder="Subject" maxlength="40" />
+        <div class="field-error error-visible" *ngIf="validateControl('subject')">
+            Subject is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-12 control-label">Category</label>
+      <div class="col-sm-12" [ngClass]="validateControl('category') ?
+                          'field-has-error': ''">
+        <input autocomplete="new-password" class="form-control" type="text" formControlName="category"
+          placeholder="Category" maxlength="40" />
+        <div class="field-error error-visible" *ngIf="validateControl('category')">
+            Category is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-12 control-label">Status</label>
+      <div class="col-sm-12" [ngClass]="validateControl('status') ?
+                          'field-has-error': ''">
+      <app-multi-select-combo-box class="combobox_style_wk" [defaultSelect]="true"
+        formControlName="status" [data]="statusList" textField="display" valueField="value"
+        [complexGetter]="false" isSearchByValue="true" [clearFilterEnabled]="false">
+      </app-multi-select-combo-box>
+        <div class="field-error error-visible" *ngIf="validateControl('status')">
+            Status is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-12 control-label">Description</label>
+      <div class="col-sm-12" [ngClass]="validateControl('description') ?
+                'field-has-error': ''">
+        <textarea autocomplete="new-password" class="form-control" type="text" formControlName="description"
+        placeholder="Description" maxlength="100" ></textarea>
+        <div class="field-error error-visible" *ngIf="validateControl('description')">
+            Description is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-12 control-label">IssueStartedOn</label>
+      <div class="col-sm-12">
+        <input autocomplete="new-password" class="form-control" *ngIf="!this.isEditModeOn" type="date" formControlName="issueStartedOn"
+          placeholder="IssueStartedOn" maxlength="19" />
+        <span *ngIf="this.isEditModeOn"> {{ this.getFormattedDate() }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="box-footer" style="clear: both;" *ngIf="!this.isCustomerAdd">
+      <button type="submit" *ngIf="!formSaveOperationInProgress" class="btn btn-info pull-right">Save</button>
+      <button type="button" *ngIf="formSaveOperationInProgress" class="btn btn-info pull-right">Saving</button>
+      <button type="button" class="btn btn-default pull-right" (click)="formCloseClicked()">Cancel</button>
+    </div>
+</form>
+</ng-template>

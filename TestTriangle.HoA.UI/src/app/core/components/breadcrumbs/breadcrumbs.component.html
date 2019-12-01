@@ -1,0 +1,7 @@
+
+<ul class="breadcrumbs" *ngIf="breadcrumbs">
+    <li *ngFor="let breadcrumb of breadcrumbs; let i = index" class="">
+      <a (click)="breadcrumbClick(breadcrumb)" *ngIf="!breadcrumb.disabled" class="breadcrumb-text-color font-weight500">{{ breadcrumb.label}}</a>
+      <span [ngClass]="{'active': i === breadcrumbs.lenght - 1}" *ngIf="breadcrumb.disabled">{{ breadcrumb.label }}</span>
+    </li>
+</ul>

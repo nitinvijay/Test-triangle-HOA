@@ -1,0 +1,187 @@
+.min-height {
+  height: 100vh;
+}
+
+
+
+.wk-alert,.wk-alert-danger,.wk-alert-info,.wk-alert-success,.wk-alert-warning {
+  background-color: #fff;
+  font-family: "Fira Sans","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+  font-weight: 300;
+  margin-bottom: 1.25rem;
+  padding: .75rem 1rem;
+  position: relative;
+  word-wrap: break-word;
+  border: 1px solid #474747
+}
+
+.wk-alert-danger[class*=wk-icon],.wk-alert-danger[wk-icon],.wk-alert-info[class*=wk-icon],.wk-alert-info[wk-icon],.wk-alert-success[class*=wk-icon],.wk-alert-success[wk-icon],.wk-alert-warning[class*=wk-icon],.wk-alert-warning[wk-icon],.wk-alert[class*=wk-icon],.wk-alert[wk-icon] {
+  display: block;
+  font-weight: 300;
+  line-height: inherit;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 3.8125rem;
+  speak: normal;
+  text-align: left;
+  width: auto
+}
+
+.wk-alert-danger[class*=wk-icon]::before,.wk-alert-danger[wk-icon]::before,.wk-alert-info[class*=wk-icon]::before,.wk-alert-info[wk-icon]::before,.wk-alert-success[class*=wk-icon]::before,.wk-alert-success[wk-icon]::before,.wk-alert-warning[class*=wk-icon]::before,.wk-alert-warning[wk-icon]::before,.wk-alert[class*=wk-icon]::before,.wk-alert[wk-icon]::before {
+  bottom: 0;
+  color: #fff;
+  font-size: 1.4375rem;
+  left: 0;
+  line-height: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  position: absolute;
+  speak: none;
+  top: 0;
+  width: auto;
+  padding: .6875rem
+}
+
+.wk-alert a,.wk-alert-danger a,.wk-alert-info a,.wk-alert-success a,.wk-alert-warning a {
+  color: inherit;
+  text-decoration: underline
+}
+
+.wk-alert .wk-alert-title,.wk-alert-danger .wk-alert-title,.wk-alert-info .wk-alert-title,.wk-alert-success .wk-alert-title,.wk-alert-warning .wk-alert-title {
+  font-weight: 700
+}
+
+.wk-alert .wk-alert-title,.wk-alert p,.wk-alert-danger .wk-alert-title,.wk-alert-danger p,.wk-alert-info .wk-alert-title,.wk-alert-info p,.wk-alert-success .wk-alert-title,.wk-alert-success p,.wk-alert-warning .wk-alert-title,.wk-alert-warning p {
+  margin-bottom: .3125rem
+}
+
+.wk-alert .wk-alert-title:last-child,.wk-alert p:last-child,.wk-alert-danger .wk-alert-title:last-child,.wk-alert-danger p:last-child,.wk-alert-info .wk-alert-title:last-child,.wk-alert-info p:last-child,.wk-alert-success .wk-alert-title:last-child,.wk-alert-success p:last-child,.wk-alert-warning .wk-alert-title:last-child,.wk-alert-warning p:last-child {
+  margin-bottom: 0
+}
+
+.wk-alert-info,.wk-alert[wk-context*=info] {
+  border-color: #007ac3;
+  color: #007ac3
+}
+
+.wk-alert-info[class*=wk-icon]::before,.wk-alert-info[wk-icon]::before,.wk-alert[wk-context*=info][class*=wk-icon]::before,.wk-alert[wk-context*=info][wk-icon]::before {
+  background-color: #007ac3
+}
+
+.wk-alert-success,.wk-alert[wk-context*=success] {
+  border-color: #85bc20;
+  color: #85bc20
+}
+
+.wk-alert-success[class*=wk-icon]::before,.wk-alert-success[wk-icon]::before,.wk-alert[wk-context*=success][class*=wk-icon]::before,.wk-alert[wk-context*=success][wk-icon]::before {
+  background-color: #85bc20
+}
+
+.wk-alert-warning,.wk-alert[wk-context*=warning] {
+  border-color: #ea8f00;
+  color: #ea8f00
+}
+
+.wk-alert-warning[class*=wk-icon]::before,.wk-alert-warning[wk-icon]::before,.wk-alert[wk-context*=warning][class*=wk-icon]::before,.wk-alert[wk-context*=warning][wk-icon]::before {
+  background-color: #ea8f00
+}
+
+.wk-alert-danger,.wk-alert[wk-context*=danger] {
+  border-color: #e5202e;
+  color: #e5202e
+}
+
+.wk-alert-danger[class*=wk-icon]::before,.wk-alert-danger[wk-icon]::before,.wk-alert[wk-context*=danger][class*=wk-icon]::before,.wk-alert[wk-context*=danger][wk-icon]::before {
+  background-color: #e5202e
+}
+
+.wk-alert-dismissible {
+  padding-right: 2.875rem
+}
+
+.wk-alert-dismissible .wk-alert-dismiss,.wk-alert-dismissible .wk-icon-close-empty {
+  background-color: transparent;
+  color: inherit;
+  position: absolute;
+  transition: opacity .2s;
+  width: auto
+}
+
+.wk-alert-dismissible .wk-alert-dismiss:hover:not([disabled]),.wk-alert-dismissible .wk-icon-close-empty:hover:not([disabled]) {
+  color: inherit
+}
+
+.wk-alert-dismissible .wk-alert-dismiss {
+  font-size: 1.375rem;
+  right: .4375rem;
+  top: .25rem;
+  padding: .4375rem
+}
+
+.wk-alert-dismissible .wk-alert-dismiss:hover,.wk-alert-dismissible .wk-icon-close-empty:hover {
+  background-color: transparent;
+  opacity: .6
+}
+
+.wk-alert-dismissible .wk-icon-close-empty {
+  font-size: 2.375rem;
+  margin: 0;
+  padding: 0;
+  right: .25rem;
+  top: .25rem
+}
+
+.wk-alert-fixed {
+  border-left: 0;
+  border-right: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  -ms-transform: translateY(-100%);
+  transform: translateY(-100%);
+  transition: .2s;
+  z-index: 9999
+}
+
+.open.wk-alert-fixed {
+  -ms-transform: translateY(0);
+  transform: translateY(0)
+}
+
+.wk-spin {
+  -webkit-animation: 2s linear infinite spin;
+  animation: 2s linear infinite spin;
+  display: inline-block
+}
+
+.st-toaster-position {
+  position: fixed;
+  z-index: 1000000;
+  word-wrap: break-word;
+  width: 50%;
+  left: 24%;
+  text-align: center;
+  top: 1%;
+}
+
+.wk-icon-close:before {
+  content: '\e865'
+}
+
+.wk-icon-close-circle:before {
+  content: '\e866'
+}
+
+.wk-icon-close-square:before {
+  content: '\e867'
+}
+
+.wk-alert-dismissible .wk-alert-dismiss {
+  font-size: 1.375rem;
+  right: .4375rem;
+  top: .25rem;
+  padding: .4375rem
+}
+
+

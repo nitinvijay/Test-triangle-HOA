@@ -1,0 +1,137 @@
+<div class="overlay">
+  <div class="overlay-content">
+    <div overlay [isOpen]="formSaveOperationInProgress">
+      <div id="customerAddDiv" class="bg-white">
+        <div class="side-overlay-header">
+          <span>
+            {{ this.customerTitle}}
+          </span>
+          <i class="material-icons dp48 float-right c-white" tooltip="Close" tooltipPlacement="bottom"
+            (click)="formCloseClicked()">close</i>
+          <i class="material-icons dp48 float-right c-white" *ngIf="!formSaveOperationInProgress" tooltip="Save"
+            tooltipPlacement="bottom" (click)="saveCustomer()">check</i>
+          <i *ngIf="IsEditModeOn" class="material-icons dp48 float-right c-white"
+            (click)='onDeleteCustomer()' tooltip="Delete" tooltipPlacement="bottom">delete</i>
+        </div>
+        <div class="alert-danger" *ngIf="saveFormErrors.length> 0">
+          <div *ngFor="let err of saveFormErrors">{{err}}</div>
+        </div>
+        <form disableAutoComplete [formGroup]="registerForm" #customerForm="ngForm" (ngSubmit)="saveCustomer()"
+          class="form-horizontal">
+          <div class="box-body">
+            <div class="form-group">
+              <label class="col-sm-12 control-label">First name</label>
+              <div class="col-sm-12" [ngClass]="validateControl('firstName') ?
+                        'field-has-error': ''">
+                <input autocomplete="new-password" class="form-control" type="text" formControlName="firstName"
+                  placeholder="First name" maxlength="40" />
+                <div class="field-error error-visible" *ngIf="validateControl('firstName')">
+                  First name is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-12 control-label">Last name</label>
+              <div class="col-sm-12" [ngClass]="validateControl('lastName') ?
+                        'field-has-error': ''">
+                <input autocomplete="new-password" class="form-control" type="text" formControlName="lastName"
+                  placeholder="Last name" maxlength="40" />
+                <div class="field-error error-visible" *ngIf="validateControl('lastName')">
+                  Last name is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-12 control-label">Address</label>
+              <div class="col-sm-12" [ngClass]="validateControl('address') ?
+                        'field-has-error': ''">
+                <input autocomplete="new-password" class="form-control" type="text" formControlName="address"
+                  placeholder="Address" maxlength="100" />
+                <div class="field-error error-visible" *ngIf="validateControl('address')">
+                  Address is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-12 control-label">City</label>
+              <div class="col-sm-12" [ngClass]="validateControl('city') ?
+              'field-has-error': ''">
+                <input autocomplete="new-password" class="form-control" type="text" formControlName="city"
+                  placeholder="City" maxlength="40" />
+                <div class="field-error error-visible" *ngIf="validateControl('city')">
+                  City is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-12 control-label">Postal code</label>
+                <div class="col-sm-12" [ngClass]="validateControl('postalCode') ?
+                'field-has-error': ''">
+                  <input autocomplete="new-password" class="form-control" type="text" formControlName="postalCode"
+                    placeholder="Postal code" maxlength="10" />
+                  <div class="field-error error-visible" *ngIf="validateControl('postalCode')">
+                      Postal code is required.
+                  </div>
+                </div>
+              </div>
+            <div class="form-group">
+              <label class="col-sm-12 control-label">State</label>
+              <div class="col-sm-12" [ngClass]="validateControl('state') ?
+              'field-has-error': ''">
+                <input autocomplete="new-password" class="form-control" type="text" formControlName="state"
+                  placeholder="State" maxlength="40" />
+                <div class="field-error error-visible" *ngIf="validateControl('state')">
+                  State is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-12 control-label">Country</label>
+              <div class="col-sm-12">
+                <app-multi-select-combo-box class="combobox_style_wk" [defaultSelect]="true" #countryDdl
+                  formControlName="country" [data]="countryList" textField="display" valueField="value"
+                  [complexGetter]="false" isSearchByValue="true" [clearFilterEnabled]="false">
+                </app-multi-select-combo-box>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-12 control-label">Phone</label>
+              <div class="col-sm-12">
+                <input autocomplete="new-password" class="form-control" type="text" formControlName="phone"
+                  placeholder="Phone" maxlength="40" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="!this.IsEditModeOn">
+              <a (click)="addTicket()" class="clear-both links-on-forms float-right" *ngIf="this.tickets.length > 0 && this.tickets.length < maxTickets">Add another ticket</a>
+              <div formArrayName="tickets" class="clear-both">
+                <app-manage-ticket *ngFor="let item of this.tickets; let i = index" [ticketDetails]="item"
+                [ticketsArray]="registerForm.controls['tickets']" [isCustomerAdd]="true"
+                [ticketIndex]="i"
+                (DeleteTicketEvent)="removeTicket($event)">
+                </app-manage-ticket>
+              </div>
+            <a class="links-on-forms float-left" (click)="addTicket()" *ngIf="this.tickets.length > 0 && this.tickets.length < maxTickets">Add another ticket</a>
+            <a class="links-on-forms float-left" (click)="addTicket()" *ngIf="this.tickets.length === 0 && this.tickets.length < maxTickets">Add ticket</a>
+          </div>
+          <div class="form-group" *ngIf="this.IsEditModeOn">
+          <a class="links-on-forms float-left" (click)="addNewTicket()">Add ticket</a>
+        </div>
+
+          <div class="box-footer" style="clear: both;">
+            <button type="submit" *ngIf="!formSaveOperationInProgress" class="btn btn-info pull-right">Save</button>
+            <button type="button" *ngIf="formSaveOperationInProgress" class="btn btn-info pull-right">Saving</button>
+            <button type="button" class="btn btn-default pull-right" (click)="formCloseClicked()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.manageTicketVisible">
+  <app-manage-ticket (AddFormCloseEvent)="manageTicketFormClosed($event)" [customerId]="customerId"
+    (AddFormSaveMessageUpdatedEvent)="setTicketSaveMessage($event)"
+    (DeleteTicketFormEvent)="setTicketDeleteMessage($event)">
+  </app-manage-ticket>
+</div>
