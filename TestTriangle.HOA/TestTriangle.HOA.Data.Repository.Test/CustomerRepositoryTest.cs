@@ -82,9 +82,9 @@ namespace TestTriangle.HOA.Data.Repository.Test
         [TestMethod]
         public void GetCustomePagingTest()
         {
-            var customers = _repository.GetCustomersAsync(0,0).Data;
+            var customers = _repository.GetCustomersAsync(1,10).Data;
             Assert.IsNotNull(customers);
-            Assert.IsTrue(customers.Count() == 0);
+            Assert.IsTrue(customers.Count() > 0);
         }
 
 
