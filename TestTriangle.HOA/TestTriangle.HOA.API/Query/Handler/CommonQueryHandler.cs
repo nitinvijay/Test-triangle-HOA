@@ -10,23 +10,22 @@ using TestTriangle.HOA.Data.Repository.Implementation;
 
 namespace TestTriangle.HOA.API.Query.Handler
 {
-    public class CustomerQueryHandler
+    public class CommonQueryHandler
     {
         private readonly IUnitOfWork _unitOfWork;
-        public CustomerQueryHandler(IUnitOfWork unitOfWork)
+        public CommonQueryHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public QueryResponse<QueryCustomerModel> HandleAsync(GetAllQuery<QueryCustomerModel> getAllQuery)
+        public QueryResponse<Dropdown> GetCountries()
         {
-            return _unitOfWork.CustomerRepository.GetCustomersAsync(getAllQuery.Page, getAllQuery.PageSize,
-                getAllQuery.OrderBy, getAllQuery.Dir, getAllQuery.Filters);
+            return _unitOfWork.CommonRepository.GetCountries();
         }
 
-        public async Task<QueryCustomerModel> HandleAsync(FindQuery<QueryCustomerModel> findQuery)
+        public QueryResponse<Dropdown> GetStatus()
         {
-            return await _unitOfWork.CustomerRepository.FindCustomerAsync(findQuery.Id);
+            return _unitOfWork.CommonRepository.GetStatus();
         }
 
     }
