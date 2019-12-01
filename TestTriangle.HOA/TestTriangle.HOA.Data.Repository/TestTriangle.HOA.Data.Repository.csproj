@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestTriangle.HOA.Data\TestTriangle.HOA.Data.csproj" />
+    <ProjectReference Include="..\TestTriangle.HOA.Extensions\TestTriangle.HOA.Extensions.csproj" />
+  </ItemGroup>
+
+</Project>
